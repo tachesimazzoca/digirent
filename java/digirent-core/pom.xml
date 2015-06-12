@@ -1,0 +1,46 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>com.github.tachesimazzoca</groupId>
+        <artifactId>digirent-parent</artifactId>
+        <version>0.0.0-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>digirent-core</artifactId>
+    <name>Digirent</name>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.github.tachesimazzoca</groupId>
+            <artifactId>digirent-config</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tachesimazzoca</groupId>
+            <artifactId>digirent-jersey</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tachesimazzoca</groupId>
+            <artifactId>digirent-jpa</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tachesimazzoca</groupId>
+            <artifactId>digirent-storage</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tachesimazzoca</groupId>
+            <artifactId>digirent-util</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.tachesimazzoca</groupId>
+            <artifactId>digirent-view</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
+</project>
