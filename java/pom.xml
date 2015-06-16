@@ -26,6 +26,8 @@
         <module>digirent-storage</module>
         <module>digirent-util</module>
         <module>digirent-view</module>
+
+        <module>digirent-examples-forum</module>
     </modules>
 
     <dependencyManagement>
