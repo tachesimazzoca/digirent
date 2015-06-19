@@ -1,5 +1,5 @@
 {
-  "name": digirent-examples-forum",
+  "name": "digirent-examples-forum",
   "version": "0.0.0",
   "dependencies": {
     "jquery": "1.11.x",
