@@ -28,18 +28,18 @@ public class AccountsController {
 
     private final Validator validator;
     private final AccountDao accountDao;
-    private final Storage<Map<String, Object>> signupStorage;
-    private final TextMailerFactory signupMailerFactory;
+    private final Storage<Map<String, Object>> signUpStorage;
+    private final TextMailerFactory signUpMailerFactory;
 
     public AccountsController(
             Validator validator,
             AccountDao accountDao,
-            Storage<Map<String, Object>> signupStorage,
-            TextMailerFactory signupMailerFactory) {
+            Storage<Map<String, Object>> signUpStorage,
+            TextMailerFactory signUpMailerFactory) {
         this.validator = validator;
         this.accountDao = accountDao;
-        this.signupStorage = signupStorage;
-        this.signupMailerFactory = signupMailerFactory;
+        this.signUpStorage = signUpStorage;
+        this.signUpMailerFactory = signUpMailerFactory;
     }
 
     @GET
@@ -51,18 +51,18 @@ public class AccountsController {
     }
 
     @GET
-    @Path("signup")
-    public Response signup(@UserContext UserHelper userHelper) {
+    @Path("entry")
+    public Response entry(@UserContext UserHelper userHelper) {
         userHelper.logout();
-        View view = new View("accounts/signup", params(
+        View view = new View("accounts/entry", params(
                 "form", new FormHelper<AccountsSignupForm>(AccountsSignupForm.defaultForm())));
         return Response.ok(view).cookie(userHelper.toCookie()).build();
     }
 
     @POST
-    @Path("signup")
+    @Path("entry")
     @Consumes("application/x-www-form-urlencoded")
-    public Response postSignup(
+    public Response postEntry(
             @UserContext UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams)
@@ -80,7 +80,7 @@ public class AccountsController {
         }
         Set<ConstraintViolation<AccountsSignupForm>> errors = validator.validate(form);
         if (!errors.isEmpty()) {
-            View view = new View("accounts/signup", params(
+            View view = new View("accounts/entry", params(
                     "form", new FormHelper<AccountsSignupForm>(form, errors)));
             return Response.status(Response.Status.FORBIDDEN).entity(view)
                     .cookie(userHelper.toCookie()).build();
@@ -89,13 +89,13 @@ public class AccountsController {
         Map<String, Object> params = params(
                 "email", form.getEmail(),
                 "password", form.getPassword());
-        String code = signupStorage.create(params);
+        String code = signUpStorage.create(params);
         String url = uriInfo.getBaseUriBuilder()
                 .path("/accounts/activate")
                 .queryParam("code", code)
                 .build()
                 .toString();
-        signupMailerFactory.create(form.getEmail(), url).send();
+        signUpMailerFactory.create(form.getEmail(), url).send();
 
         return Response.ok(new View("accounts/verify"))
                 .cookie(userHelper.toCookie()).build();
@@ -110,8 +110,8 @@ public class AccountsController {
 
         userHelper.logout();
 
-        Optional<Map<String, Object>> opt = signupStorage.read(code);
-        signupStorage.delete(code);
+        Optional<Map<String, Object>> opt = signUpStorage.read(code);
+        signUpStorage.delete(code);
         if (!opt.isPresent()) {
             return Response.seeOther(uriInfo.getBaseUriBuilder()
                     .path("/accounts/errors/session").build())
@@ -136,8 +136,8 @@ public class AccountsController {
     }
 
     @GET
-    @Path("signin")
-    public Response signin(
+    @Path("login")
+    public Response login(
             @UserContext UserHelper userHelper,
             @QueryParam("returnTo") @DefaultValue("") String returnTo) {
 
@@ -145,15 +145,15 @@ public class AccountsController {
 
         AccountsSigninForm form = AccountsSigninForm.defaultForm();
         form.setReturnTo(returnTo);
-        return Response.ok(new View("accounts/signin", params(
+        return Response.ok(new View("accounts/login", params(
                 "form", new FormHelper<AccountsSigninForm>(form))))
                 .cookie(userHelper.toCookie()).build();
     }
 
     @POST
-    @Path("signin")
+    @Path("login")
     @Consumes("application/x-www-form-urlencoded")
-    public Response postSignin(
+    public Response postLogin(
             @UserContext UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams) {
@@ -175,7 +175,7 @@ public class AccountsController {
             }
         }
         if (account == null) {
-            View view = new View("accounts/signin", params(
+            View view = new View("accounts/login", params(
                     "form", new FormHelper<AccountsSigninForm>(form, errors)));
             return Response.status(Response.Status.FORBIDDEN).entity(view)
                     .cookie(userHelper.toCookie()).build();
@@ -190,8 +190,8 @@ public class AccountsController {
     }
 
     @GET
-    @Path("signout")
-    public Response signout(
+    @Path("logout")
+    public Response logout(
             @UserContext UserHelper userHelper,
             @Context UriInfo uriInfo) {
         userHelper.logout();

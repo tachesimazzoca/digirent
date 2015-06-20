@@ -40,10 +40,10 @@
           <li><a href="${config.url.base}questions">Questions</a></li>
           <#if account?has_content>
           <li><a href="${config.url.base}dashboard">Dashboard</a></li>
-          <li><a href="${config.url.base}accounts/signout">Sign Out</a></li>
+          <li><a href="${config.url.base}accounts/logout">Sign Out</a></li>
           <#else>
-          <li><a href="${config.url.base}accounts/signup">Sign Up</a></li>
-          <li><a href="${config.url.base}accounts/signin">Sign In</a></li>
+          <li><a href="${config.url.base}accounts/entry">Sign Up</a></li>
+          <li><a href="${config.url.base}accounts/login">Sign In</a></li>
           </#if>
         </ul>
       </div>

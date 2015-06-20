@@ -3,16 +3,16 @@ package app;
 import digirent.mail.TextMailerFactory;
 
 public class AppFactoryConfig {
-    private TextMailerFactory signupMailerFactory;
+    private TextMailerFactory signUpMailerFactory;
     private TextMailerFactory recoveryMailerFactory;
     private TextMailerFactory profileMailerFactory;
 
-    public TextMailerFactory getSignupMailerFactory() {
-        return signupMailerFactory;
+    public TextMailerFactory getSignUpMailerFactory() {
+        return signUpMailerFactory;
     }
 
-    public void setSignupMailerFactory(TextMailerFactory signupMailerFactory) {
-        this.signupMailerFactory = signupMailerFactory;
+    public void setSignUpMailerFactory(TextMailerFactory signUpMailerFactory) {
+        this.signUpMailerFactory = signUpMailerFactory;
     }
 
     public TextMailerFactory getRecoveryMailerFactory() {

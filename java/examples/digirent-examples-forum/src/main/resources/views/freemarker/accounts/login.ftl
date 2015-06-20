@@ -10,7 +10,7 @@
 </div>
 </#if>
 <div class="center-block" style="width: 400px">
-<form action="signin" method="POST">
+<form action="login" method="POST">
 <div class="well">
   ${form.toHTMLInput("hidden", "returnTo")}
   <div class="form-group">
@@ -28,6 +28,6 @@
 </div>
 </form>
 <hr>
-<p>If you don't have an account, <a href="${config.url.base}accounts/signup">create a new account</a>.</p>
+<p>If you don't have an account, <a href="${config.url.base}accounts/entry">create a new account</a>.</p>
 </div>
 </@layout.defaultLayout>

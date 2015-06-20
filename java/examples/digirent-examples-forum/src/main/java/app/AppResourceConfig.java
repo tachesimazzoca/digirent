@@ -51,8 +51,8 @@ public class AppResourceConfig extends ResourceConfig {
         EntityManagerFactory ef = Persistence.createEntityManagerFactory("default");
         Storage<Map<String, Object>> userStorage =
                 new JPAStorage(ef, "session_storage", "user-");
-        Storage<Map<String, Object>> signupStorage =
-                new JPAStorage(ef, "session_storage", "signup-");
+        Storage<Map<String, Object>> signUpStorage =
+                new JPAStorage(ef, "session_storage", "sign_up-");
         Storage<Map<String, Object>> recoveryStorage =
                 new JPAStorage(ef, "session_storage", "recovery-");
         Storage<Map<String, Object>> profileStorage =
@@ -69,7 +69,7 @@ public class AppResourceConfig extends ResourceConfig {
         AccountAnswerDao accountAnswerDao = new AccountAnswerDao(ef);
 
         // mailer
-        TextMailerFactory signupMailerFactory = factoryConfig.getSignupMailerFactory();
+        TextMailerFactory signUpMailerFactory = factoryConfig.getSignUpMailerFactory();
         TextMailerFactory recoveryMailerFactory = factoryConfig.getRecoveryMailerFactory();
         TextMailerFactory profileMailerFactory = factoryConfig.getProfileMailerFactory();
 
@@ -91,7 +91,7 @@ public class AppResourceConfig extends ResourceConfig {
         // controllers
         register(new PagesController());
         register(new AccountsController(validator, accountDao,
-                signupStorage, signupMailerFactory));
+                signUpStorage, signUpMailerFactory));
         register(new RecoveryController(validator, accountDao,
                 recoveryStorage, recoveryMailerFactory));
         register(new DashboardController(questionDao, answerDao));

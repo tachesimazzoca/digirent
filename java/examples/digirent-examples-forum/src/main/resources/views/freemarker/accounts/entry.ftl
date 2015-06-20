@@ -9,7 +9,7 @@
 </ul>
 </div>
 </#if>
-<form action="signup" method="POST">
+<form action="entry" method="POST">
 <div style="width: 400px;">
   <div class="form-group">
     <label>E-mail</label>

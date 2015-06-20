@@ -4,6 +4,6 @@
   <p>Your new password has been updated successfully.</p>
 </div>
 <div>
-  <a href="${config.url.base}accounts/signin" class="btn btn-default">Sign In</a>
+  <a href="${config.url.base}accounts/login" class="btn btn-default">Sign In</a>
 </div>
 </@layout.defaultLayout>

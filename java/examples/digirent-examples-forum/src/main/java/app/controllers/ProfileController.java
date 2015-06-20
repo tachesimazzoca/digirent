@@ -211,7 +211,7 @@ public class ProfileController {
 
     private Response redirectToLogin(UriInfo uriInfo) {
         return Response.seeOther(uriInfo.getBaseUriBuilder()
-                .path("/accounts/signin")
+                .path("/accounts/login")
                 .queryParam("returnTo", "/profile/edit")
                 .build()).build();
     }

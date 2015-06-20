@@ -1,4 +1,4 @@
-signupMailerFactory:
+signUpMailerFactory:
     fake: true
     hostName: "localhost"
     smtpPort: 2525
