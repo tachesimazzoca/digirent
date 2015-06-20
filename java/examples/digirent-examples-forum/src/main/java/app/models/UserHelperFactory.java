@@ -1,16 +1,13 @@
 package app.models;
 
-import digirent.jersey.inject.UserContextFactory;
+import digirent.jersey.inject.ComponentFactory;
 import digirent.jersey.session.StorageSession;
 import digirent.storage.Storage;
 
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.Cookie;
-import javax.ws.rs.core.HttpHeaders;
-import javax.ws.rs.core.NewCookie;
+import javax.ws.rs.core.*;
 import java.util.Map;
 
-public class UserHelperFactory extends UserContextFactory<UserHelper> {
+public class UserHelperFactory extends ComponentFactory<UserHelper> {
     @Context
     HttpHeaders headers;
 
@@ -41,7 +38,7 @@ public class UserHelperFactory extends UserContextFactory<UserHelper> {
     }
 
     @Override
-    public UserContextFactory clone() {
+    public ComponentFactory clone() {
         return new UserHelperFactory(accountDao, storage, cookieName, path, domain);
     }
 

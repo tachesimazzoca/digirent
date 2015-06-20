@@ -1,8 +1,17 @@
 package app.controllers;
 
-import app.models.*;
+import app.models.Account;
+import app.models.AccountDao;
+import app.models.AccountQuestionDao;
+import app.models.AnswerDao;
+import app.models.AnswersResult;
+import app.models.Question;
+import app.models.QuestionDao;
+import app.models.QuestionEditForm;
+import app.models.QuestionsResult;
+import app.models.UserHelper;
 import com.google.common.base.Optional;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.jpa.JPA.Pagination;
 import digirent.view.View;
 import digirent.view.helper.FormHelper;
@@ -15,7 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 import static digirent.jersey.util.URIUtils.safeURI;
-import static digirent.util.ParameterUtils.*;
+import static digirent.util.ParameterUtils.emptyTo;
+import static digirent.util.ParameterUtils.nullTo;
+import static digirent.util.ParameterUtils.params;
 import static org.apache.commons.lang.StringUtils.isEmpty;
 
 @Path("/questions")
@@ -48,7 +59,7 @@ public class QuestionsController {
 
     @GET
     public Response index(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @QueryParam("sort") @DefaultValue("") String sort,
             @QueryParam("offset") @DefaultValue("") Integer offset,
             @QueryParam("limit") @DefaultValue("") Integer limit) {
@@ -88,7 +99,7 @@ public class QuestionsController {
     @GET
     @Path("{id}")
     public Response detail(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @PathParam("id") Long id,
             @QueryParam("offset") @DefaultValue("0") int offset,
@@ -154,7 +165,7 @@ public class QuestionsController {
     @GET
     @Path("star")
     public Response star(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("id") Long id) {
         return vote(userHelper, uriInfo, id, 1);
@@ -163,7 +174,7 @@ public class QuestionsController {
     @GET
     @Path("unstar")
     public Response unstar(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("id") Long id) {
 
@@ -173,7 +184,7 @@ public class QuestionsController {
     @GET
     @Path("edit")
     public Response edit(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("id") @DefaultValue("") Long id) {
 
@@ -209,7 +220,7 @@ public class QuestionsController {
     @Path("edit")
     @Consumes("application/x-www-form-urlencoded")
     public Response postEdit(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @FormParam("id") Long id,
             MultivaluedMap<String, String> formParams) {
@@ -263,7 +274,7 @@ public class QuestionsController {
     @GET
     @Path("delete")
     public Response delete(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("id") @DefaultValue("") Long id) {
 

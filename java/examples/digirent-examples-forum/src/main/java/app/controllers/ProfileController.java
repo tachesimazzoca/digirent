@@ -1,8 +1,13 @@
 package app.controllers;
 
-import app.models.*;
+import app.models.Account;
+import app.models.AccountDao;
+import app.models.FileHelper;
+import app.models.ProfileEditForm;
+import app.models.TempFileHelper;
+import app.models.UserHelper;
 import com.google.common.base.Optional;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.mail.MailerException;
 import digirent.mail.TextMailerFactory;
 import digirent.storage.Storage;
@@ -50,7 +55,7 @@ public class ProfileController {
     @GET
     @Path("edit")
     public Response edit(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo) {
 
         Optional<Account> accountOpt = userHelper.getAccount();
@@ -72,7 +77,7 @@ public class ProfileController {
     @Path("edit")
     @Consumes("application/x-www-form-urlencoded")
     public Response postEdit(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams) throws
             IOException, MailerException {
@@ -150,7 +155,7 @@ public class ProfileController {
 
     @GET
     @Path("verify")
-    public Response verify(@UserContext UserHelper userHelper) {
+    public Response verify(@Component UserHelper userHelper) {
         return Response.ok(new View("profile/verify", params(
                 "account", userHelper.getAccount().orNull()))).build();
     }
@@ -158,7 +163,7 @@ public class ProfileController {
     @GET
     @Path("activate")
     public Response activate(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("code") String code) {
         Optional<Map<String, Object>> opt = profileStorage.read(code);
@@ -202,7 +207,7 @@ public class ProfileController {
     @GET
     @Path("errors/{name}")
     public Response errors(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @PathParam("name") String name) {
         return Response.status(Response.Status.FORBIDDEN)
                 .entity(new View("profile/errors/" + name, params(

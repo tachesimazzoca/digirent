@@ -1,15 +1,11 @@
 package app.controllers;
 
 import app.models.UserHelper;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.view.View;
 
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
+import javax.ws.rs.*;
+import javax.ws.rs.core.*;
 
 import static digirent.util.ParameterUtils.params;
 
@@ -17,20 +13,20 @@ import static digirent.util.ParameterUtils.params;
 @Produces(MediaType.TEXT_HTML)
 public class PagesController {
     @GET
-    public Response home(@UserContext UserHelper userHelper) {
+    public Response home(@Component UserHelper userHelper) {
         return index(userHelper);
     }
 
     @GET
     @Path("index.html")
-    public Response index(@UserContext UserHelper userHelper) {
+    public Response index(@Component UserHelper userHelper) {
         return page(userHelper, "index");
     }
 
     @GET
     @Path("pages/{name}.html")
     public Response page(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @PathParam("name") String name) {
         View view = new View("pages/" + name, params(
                 "account", userHelper.getAccount().orNull()));

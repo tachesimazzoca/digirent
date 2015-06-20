@@ -1,16 +1,18 @@
 package app.controllers;
 
-import app.models.*;
+import app.models.Account;
+import app.models.AnswerDao;
+import app.models.AnswersResult;
+import app.models.QuestionDao;
+import app.models.QuestionsResult;
+import app.models.UserHelper;
 import com.google.common.base.Optional;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.jpa.JPA.Pagination;
 import digirent.view.View;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 
 import static digirent.util.ParameterUtils.params;
 
@@ -29,7 +31,7 @@ public class DashboardController {
 
     @GET
     public Response index(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo) {
 
         Optional<Account> accountOpt = userHelper.getAccount();
@@ -44,7 +46,7 @@ public class DashboardController {
     @GET
     @Path("questions")
     public Response questions(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("offset") @DefaultValue("0") int offset,
             @QueryParam("limit") @DefaultValue("20") int limit) {
@@ -64,7 +66,7 @@ public class DashboardController {
     @GET
     @Path("answers")
     public Response answers(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("offset") @DefaultValue("0") int offset,
             @QueryParam("limit") @DefaultValue("20") int limit) {

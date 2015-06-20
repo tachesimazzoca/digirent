@@ -15,14 +15,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class UserContextFactoryProvider extends AbstractValueFactoryProvider {
-    private UserContextFactoryMap factoryMap;
+public class ComponentFactoryProvider extends AbstractValueFactoryProvider {
+    private ComponentFactoryMap factoryMap;
 
     @Inject
-    public UserContextFactoryProvider(
+    public ComponentFactoryProvider(
             final MultivaluedParameterExtractorProvider extractorProvider,
             final ServiceLocator injector,
-            final UserContextFactoryMap factoryMap
+            final ComponentFactoryMap factoryMap
     ) {
         super(extractorProvider, injector, Parameter.Source.UNKNOWN);
         this.factoryMap = factoryMap;
@@ -31,37 +31,37 @@ public class UserContextFactoryProvider extends AbstractValueFactoryProvider {
     @Override
     protected Factory<?> createValueFactory(Parameter parameter) {
         final Class<?> classType = parameter.getRawType();
-        UserContext annotation = parameter.getAnnotation(UserContext.class);
+        Component annotation = parameter.getAnnotation(Component.class);
         if (null == annotation)
             return null;
 
-        UserContextFactory<?> factory = factoryMap.get(classType);
+        ComponentFactory<?> factory = factoryMap.get(classType);
         if (null != factory)
             return factory.clone();
         else
             return null;
     }
 
-    public static class SessionInjectionResolver extends ParamInjectionResolver<UserContext> {
+    public static class SessionInjectionResolver extends ParamInjectionResolver<Component> {
         public SessionInjectionResolver() {
-            super(UserContextFactoryProvider.class);
+            super(ComponentFactoryProvider.class);
         }
     }
 
     public static class Binder extends AbstractBinder {
-        private final UserContextFactoryMap factoryMap;
+        private final ComponentFactoryMap factoryMap;
 
-        public Binder(UserContextFactoryMap factoryMap) {
+        public Binder(ComponentFactoryMap factoryMap) {
             this.factoryMap = factoryMap;
         }
 
         @Override
         protected void configure() {
-            bind(this.factoryMap).to(UserContextFactoryMap.class);
-            bind(UserContextFactoryProvider.class).to(ValueFactoryProvider.class)
+            bind(this.factoryMap).to(ComponentFactoryMap.class);
+            bind(ComponentFactoryProvider.class).to(ValueFactoryProvider.class)
                     .in(Singleton.class);
             bind(SessionInjectionResolver.class).to(
-                    new TypeLiteral<InjectionResolver<UserContext>>() {
+                    new TypeLiteral<InjectionResolver<Component>>() {
                     }
             ).in(Singleton.class);
         }

@@ -1,14 +1,28 @@
 package app;
 
-import app.controllers.*;
-import app.models.*;
+import app.controllers.AccountsController;
+import app.controllers.AnswersController;
+import app.controllers.DashboardController;
+import app.controllers.PagesController;
+import app.controllers.ProfileController;
+import app.controllers.QuestionsController;
+import app.controllers.RecoveryController;
+import app.models.AccountAnswerDao;
+import app.models.AccountDao;
+import app.models.AccountQuestionDao;
+import app.models.AnswerDao;
+import app.models.FileHelper;
+import app.models.FileHelperFactory;
+import app.models.QuestionDao;
+import app.models.TempFileHelper;
+import app.models.UserHelperFactory;
 import app.resources.UploadResource;
 import app.util.Jackson;
 import digirent.config.Config;
 import digirent.config.TypesafeConfig;
 import digirent.jersey.binder.ConfigBinder;
-import digirent.jersey.inject.UserContextFactoryMap;
-import digirent.jersey.inject.UserContextFactoryProvider;
+import digirent.jersey.inject.ComponentFactoryMap;
+import digirent.jersey.inject.ComponentFactoryProvider;
 import digirent.jersey.provider.ViewMessageBodyWriter;
 import digirent.jpa.JPAStorage;
 import digirent.mail.TextMailerFactory;
@@ -74,9 +88,9 @@ public class AppResourceConfig extends ResourceConfig {
         TextMailerFactory profileMailerFactory = factoryConfig.getProfileMailerFactory();
 
         // providers
-        UserContextFactoryMap factoryMap = new UserContextFactoryMap(
+        ComponentFactoryMap factoryMap = new ComponentFactoryMap(
                 new UserHelperFactory(accountDao, userStorage, "APP_SESSION"));
-        register(new UserContextFactoryProvider.Binder(factoryMap));
+        register(new ComponentFactoryProvider.Binder(factoryMap));
 
         // finder
         String tmpPath = config.get("path.tmp", String.class);

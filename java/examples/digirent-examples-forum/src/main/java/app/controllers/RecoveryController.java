@@ -1,8 +1,12 @@
 package app.controllers;
 
-import app.models.*;
+import app.models.Account;
+import app.models.AccountDao;
+import app.models.RecoveryEntryForm;
+import app.models.RecoveryResetForm;
+import app.models.UserHelper;
 import com.google.common.base.Optional;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.mail.MailerException;
 import digirent.mail.TextMailerFactory;
 import digirent.storage.Storage;
@@ -47,7 +51,7 @@ public class RecoveryController {
 
     @GET
     @Path("entry")
-    public Response entry(@UserContext UserHelper userHelper) {
+    public Response entry(@Component UserHelper userHelper) {
         userHelper.logout();
         RecoveryEntryForm form = RecoveryEntryForm.defaultForm();
         View view = new View("recovery/entry", params(
@@ -59,7 +63,7 @@ public class RecoveryController {
     @Path("entry")
     @Consumes("application/x-www-form-urlencoded")
     public Response postEntry(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams)
             throws MailerException {
@@ -100,7 +104,7 @@ public class RecoveryController {
     @GET
     @Path("reset")
     public Response reset(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("code") String code) {
 
@@ -123,7 +127,7 @@ public class RecoveryController {
     @Path("reset")
     @Consumes("application/x-www-form-urlencoded")
     public Response postReset(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams) {
 

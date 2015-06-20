@@ -1,6 +1,6 @@
 package digirent.jersey.session;
 
-import digirent.jersey.inject.UserContextFactory;
+import digirent.jersey.inject.ComponentFactory;
 
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
@@ -8,7 +8,7 @@ import javax.ws.rs.core.HttpHeaders;
 import javax.ws.rs.core.NewCookie;
 import java.util.Map;
 
-public class CookieSessionFactory extends UserContextFactory<CookieSession> {
+public class CookieSessionFactory extends ComponentFactory<CookieSession> {
     @Context
     private HttpHeaders headers;
 

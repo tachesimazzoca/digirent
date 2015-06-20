@@ -1,9 +1,13 @@
 package app.controllers;
 
-import app.models.*;
+import app.models.Account;
+import app.models.AccountDao;
+import app.models.AccountsSigninForm;
+import app.models.AccountsSignupForm;
+import app.models.UserHelper;
 import com.google.common.base.Optional;
 import digirent.config.Config;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.mail.MailerException;
 import digirent.mail.TextMailerFactory;
 import digirent.storage.Storage;
@@ -52,7 +56,7 @@ public class AccountsController {
 
     @GET
     @Path("entry")
-    public Response entry(@UserContext UserHelper userHelper) {
+    public Response entry(@Component UserHelper userHelper) {
         userHelper.logout();
         View view = new View("accounts/entry", params(
                 "form", new FormHelper<AccountsSignupForm>(AccountsSignupForm.defaultForm())));
@@ -63,7 +67,7 @@ public class AccountsController {
     @Path("entry")
     @Consumes("application/x-www-form-urlencoded")
     public Response postEntry(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams)
             throws MailerException {
@@ -104,7 +108,7 @@ public class AccountsController {
     @GET
     @Path("activate")
     public Response activate(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("code") String code) {
 
@@ -138,7 +142,7 @@ public class AccountsController {
     @GET
     @Path("login")
     public Response login(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @QueryParam("returnTo") @DefaultValue("") String returnTo) {
 
         userHelper.logout();
@@ -154,7 +158,7 @@ public class AccountsController {
     @Path("login")
     @Consumes("application/x-www-form-urlencoded")
     public Response postLogin(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             MultivaluedMap<String, String> formParams) {
 
@@ -192,7 +196,7 @@ public class AccountsController {
     @GET
     @Path("logout")
     public Response logout(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo) {
         userHelper.logout();
         String returnTo = config.get("url.home", String.class);

@@ -1,8 +1,15 @@
 package app.controllers;
 
-import app.models.*;
+import app.models.Account;
+import app.models.AccountAnswerDao;
+import app.models.Answer;
+import app.models.AnswerDao;
+import app.models.AnswerEditForm;
+import app.models.Question;
+import app.models.QuestionDao;
+import app.models.UserHelper;
 import com.google.common.base.Optional;
-import digirent.jersey.inject.UserContext;
+import digirent.jersey.inject.Component;
 import digirent.view.View;
 import digirent.view.helper.FormHelper;
 
@@ -37,7 +44,7 @@ public class AnswersController {
     @GET
     @Path("edit")
     public Response edit(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("questionId") @DefaultValue("") Long questionId,
             @QueryParam("id") @DefaultValue("") Long id) {
@@ -91,7 +98,7 @@ public class AnswersController {
     @Path("edit")
     @Consumes("application/x-www-form-urlencoded")
     public Response postEdit(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @FormParam("questionId") Long questionId,
             @FormParam("id") Long id,
@@ -156,7 +163,7 @@ public class AnswersController {
     @GET
     @Path("delete")
     public Response delete(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("id") @DefaultValue("") Long id) {
 
@@ -182,7 +189,7 @@ public class AnswersController {
     @GET
     @Path("vote")
     public Response vote(
-            @UserContext UserHelper userHelper,
+            @Component UserHelper userHelper,
             @Context UriInfo uriInfo,
             @QueryParam("id") @DefaultValue("") Long id,
             @QueryParam("point") @DefaultValue("0") int point,
