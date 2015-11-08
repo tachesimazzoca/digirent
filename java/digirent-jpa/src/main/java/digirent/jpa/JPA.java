@@ -88,7 +88,7 @@ public class JPA {
         int first = offset;
         if (first >= count) {
             if (count > 0)
-                first = (int) ((count - 1) / limit);
+                first = (int) ((count - 1) / limit) * limit;
             else
                 first = 0;
         }
