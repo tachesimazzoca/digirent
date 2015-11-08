@@ -63,7 +63,7 @@ public class QuestionDao extends JPADao<Question> {
         String where = " WHERE questions.status = 0";
         String countQuery = COUNT_QUESTIONS_RESULT + where;
         String selectQuery = SELECT_QUESTIONS_RESULT + where
-                + " ORDER BY " + orderBy.getCaluse();
+                + " ORDER BY " + orderBy.getClause();
         Pagination<QuestionsResult> pagination = JPA.paginate(em, offset, limit,
                 em.createNativeQuery(countQuery),
                 em.createNativeQuery(selectQuery, "QuestionsResult"),
@@ -77,7 +77,7 @@ public class QuestionDao extends JPADao<Question> {
         String where = " WHERE questions.status IN (0, 2) AND questions.author_id = ?1";
         String countQuery = COUNT_QUESTIONS_RESULT + where;
         String selectQuery = SELECT_QUESTIONS_RESULT + where
-                + " ORDER BY " + QuestionsResult.OrderBy.defaultValue().getCaluse();
+                + " ORDER BY " + QuestionsResult.OrderBy.defaultValue().getClause();
         Pagination<QuestionsResult> pagination = JPA.paginate(em, offset, limit,
                 em.createNativeQuery(countQuery).setParameter(1, authorId),
                 em.createNativeQuery(selectQuery, "QuestionsResult").setParameter(1, authorId),

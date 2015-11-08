@@ -154,7 +154,7 @@ public class QuestionsResult {
             return name;
         }
 
-        public String getCaluse() {
+        public String getClause() {
             return clause;
         }
 
