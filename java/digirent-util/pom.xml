@@ -11,10 +11,6 @@
     <artifactId>digirent-util</artifactId>
     <name>Digirent Util</name>
 
-    <properties>
-        <jackson.version>2.4.1</jackson.version>
-    </properties>
-
     <dependencies>
         <dependency>
             <groupId>com.google.guava</groupId>
