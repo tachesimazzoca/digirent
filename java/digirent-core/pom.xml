@@ -9,7 +9,7 @@
     </parent>
 
     <artifactId>digirent-core</artifactId>
-    <name>Digirent</name>
+    <name>Digirent Core</name>
 
     <dependencies>
         <dependency>
